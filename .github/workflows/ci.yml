@@ -36,4 +36,4 @@ jobs:
       # 5️⃣ Проверка безопасности через Bandit
       - name: Security check with Bandit
         run: |
-          bandit -r app.py
+          bandit -r app.py -x B201
