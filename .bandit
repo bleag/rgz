@@ -1,4 +1,2 @@
-# .bandit
-exclude:
-  - B101
-  - B201
+[bandit]
+skips: B101,B201
