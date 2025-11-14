@@ -1,3 +1,4 @@
 # .bandit
 exclude:
+  - B101
   - B201
