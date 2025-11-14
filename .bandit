@@ -1,6 +1,12 @@
-[bandit]
-# Папки/файлы для исключения
-exclude = venv,.git,__pycache__,.github,tests
+# Bandit configuration file
 
-# Правила, которые хотим пропустить
-skips = B101,B201
+exclude:
+  - venv
+  - .git
+  - __pycache__
+  - .github
+  - tests
+
+skips:
+  - B101
+  - B201
