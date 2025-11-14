@@ -1,6 +1,12 @@
 import pytest
 import json
-from rgz.app import app, db, User, Expense, AuditLog
+import sys
+import os
+
+# Добавляем родительскую директорию в путь для импорта
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
+from app import app, db, User, Expense, AuditLog
 
 @pytest.fixture
 def client():
