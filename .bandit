@@ -1,8 +1,6 @@
-# Bandit configuration file
-
 [bandit]
-# Исключаем папки и файлы
+# Папки/файлы для исключения
 exclude = venv,.git,__pycache__,.github,tests
 
-# Исключаем конкретные правила через exclude (игнорируем их)
-exclude=B101,B201
+# Правила, которые хотим пропустить
+skips = B101,B201
