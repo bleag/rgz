@@ -34,7 +34,7 @@ jobs:
       # 5️⃣ Запуск unit-тестов
       - name: Run unit tests
         run: |
-          pytest rgz/tests/ --disable-warnings -v
+          pytest tests/ --disable-warnings -v
 
       # 6️⃣ Проверка безопасности кода
       - name: Security check with Bandit
