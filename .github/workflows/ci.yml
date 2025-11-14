@@ -3,37 +3,40 @@ name: Flask CI/CD
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
 
 jobs:
   test-and-security:
     runs-on: ubuntu-latest
 
     steps:
-      # Клонируем репозиторий
+      # 1️⃣ Клонируем репозиторий
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Настраиваем Python
+      # 2️⃣ Настраиваем Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: 3.11
 
-      # Устанавливаем зависимости
+      # 3️⃣ Устанавливаем зависимости
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r rgz/requirements.txt
           pip install pytest bandit
 
-      # Запуск unit-тестов
+      # 4️⃣ Указываем PYTHONPATH на подпапку с кодом
+      - name: Set PYTHONPATH
+        run: |
+          export PYTHONPATH=$(pwd)/rgz
+
+      # 5️⃣ Запуск unit-тестов
       - name: Run unit tests
         run: |
-          pytest tests/ --disable-warnings -v
+          pytest rgz/tests/ --disable-warnings -v
 
-      # Проверка безопасности кода
+      # 6️⃣ Проверка безопасности кода
       - name: Security check with Bandit
         run: |
-          bandit -r app.py
+          bandit -r rgz/app.py
