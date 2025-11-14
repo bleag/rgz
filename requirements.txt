@@ -1,0 +1,10 @@
+Flask==2.3.3
+Flask-Login==0.6.2
+Flask-Migrate==4.0.4
+Flask-SQLAlchemy==3.0.5
+psycopg2-binary==2.9.7
+python-dotenv==1.0.1
+pytest==7.4.2
+pytest-flask==1.2.0
+bandit==1.7.6
+Werkzeug==2.3.7
