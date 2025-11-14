@@ -1,6 +1,6 @@
 import pytest
 import json
-from app import app, db, User, Expense, AuditLog
+from rgz.app import app, db, User, Expense, AuditLog
 
 @pytest.fixture
 def client():
