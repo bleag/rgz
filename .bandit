@@ -1,2 +1,3 @@
-[bandit]
-exclude=B201
+# .bandit
+exclude:
+  - B201

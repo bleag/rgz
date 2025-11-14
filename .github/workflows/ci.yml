@@ -36,4 +36,4 @@ jobs:
       # Проверка безопасности через Bandit
       - name: Security check with Bandit
         run: |
-          bandit -r src -c .bandit
+          bandit -r . -c .bandit
