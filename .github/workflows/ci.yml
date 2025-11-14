@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r rgz/requirements.txt
+          pip install -r requirements.txt
           pip install pytest bandit
 
       # 4️⃣ Указываем PYTHONPATH на подпапку с кодом
