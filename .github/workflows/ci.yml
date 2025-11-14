@@ -3,6 +3,8 @@ name: Flask CI/CD
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   test-and-security:
@@ -13,11 +15,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2️⃣ Настраиваем Python
+      # 2️⃣ Настройка Python 3.11
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.11
+          python-version: "3.11"
 
       # 3️⃣ Устанавливаем зависимости
       - name: Install dependencies
@@ -26,17 +28,12 @@ jobs:
           pip install -r requirements.txt
           pip install pytest bandit
 
-      # 4️⃣ Указываем PYTHONPATH на подпапку с кодом
-      - name: Set PYTHONPATH
-        run: |
-          export PYTHONPATH=$(pwd)/rgz
-
-      # 5️⃣ Запуск unit-тестов
+      # 4️⃣ Запуск unit-тестов
       - name: Run unit tests
         run: |
           pytest tests/ --disable-warnings -v
 
-      # 6️⃣ Проверка безопасности кода
+      # 5️⃣ Проверка безопасности через Bandit
       - name: Security check with Bandit
         run: |
-          bandit -r rgz/app.py
+          bandit -r app.py
