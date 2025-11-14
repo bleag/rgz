@@ -11,24 +11,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Клонируем репозиторий
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Настраиваем Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
 
+      # Устанавливаем зависимости
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install pytest bandit
 
+      # Запуск unit-тестов
       - name: Run unit tests
         run: |
           pytest tests/ --disable-warnings -v
 
+      # Проверка безопасности кода
       - name: Security check with Bandit
         run: |
-          bash run_bandit.sh
+          bandit -r app.py

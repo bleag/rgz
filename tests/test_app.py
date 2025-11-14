@@ -1,11 +1,5 @@
 import pytest
 import json
-import sys
-import os
-
-# Добавляем родительскую директорию в путь для импорта
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-
 from app import app, db, User, Expense, AuditLog
 
 @pytest.fixture
@@ -22,9 +16,12 @@ def client():
 
 def register_and_login(client):
     # Регистрация
-    client.post("/register", json={"username": "testuser", "password": "123"})
+    rv = client.post("/register", json={"username": "testuser", "password": "123"})
+    assert rv.status_code == 200
+
     # Логин
-    client.post("/login", json={"username": "testuser", "password": "123"})
+    rv = client.post("/login", json={"username": "testuser", "password": "123"})
+    assert rv.status_code == 200
 
 
 def test_crud_and_audit(client):
@@ -32,7 +29,7 @@ def test_crud_and_audit(client):
 
     # Добавление расхода
     rv = client.post("/add", json={"amount": 100, "category": "еда", "description": "пицца"})
-    data = json.loads(rv.data)
+    data = rv.get_json()
     expense_id = data["id"]
     assert rv.status_code == 200
     assert data["message"] == "Expense added"
@@ -43,13 +40,13 @@ def test_crud_and_audit(client):
 
     # Просмотр расходов
     rv = client.get("/list")
-    data = json.loads(rv.data)
+    data = rv.get_json()
     assert len(data) == 1
     assert data[0]["amount"] == 100
 
     # Редактирование расхода
     rv = client.post("/edit", json={"id": expense_id, "amount": 150, "description": "пицца обновлена"})
-    data = json.loads(rv.data)
+    data = rv.get_json()
     assert rv.status_code == 200
     assert data["message"] == "Expense updated"
 
@@ -59,7 +56,7 @@ def test_crud_and_audit(client):
 
     # Удаление расхода
     rv = client.post("/delete", json={"id": expense_id})
-    data = json.loads(rv.data)
+    data = rv.get_json()
     assert rv.status_code == 200
     assert data["message"] == "Expense deleted"
 
