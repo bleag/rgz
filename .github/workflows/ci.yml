@@ -23,6 +23,10 @@ jobs:
           pip install -r requirements.txt
           pip install pytest bandit
 
+      - name: Set PYTHONPATH
+        run: |
+          export PYTHONPATH=$PYTHONPATH:$(pwd)
+
       - name: Run unit tests
         run: |
           pytest tests/ --disable-warnings -v
