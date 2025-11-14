@@ -4,14 +4,19 @@ from app import app, db, User, Expense, AuditLog
 
 @pytest.fixture
 def client():
+    # Включаем режим тестирования
     app.config['TESTING'] = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///:memory:"  # временная БД
+
+    # Используем временную SQLite БД для тестов
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///:memory:"
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
     with app.test_client() as client:
         with app.app_context():
-            db.create_all()
+            db.create_all()  # создаём таблицы перед тестом
         yield client
         with app.app_context():
-            db.drop_all()
+            db.drop_all()    # чистим БД после теста
 
 
 def register_and_login(client):
